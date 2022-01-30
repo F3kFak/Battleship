@@ -14,6 +14,13 @@ function createBoard(grid, squares) {
 }
 createBoard(userGrid, userSquares);
 
+var recordPoint = []
+
 function it(e) {
-    document.getElementById(e).classList.toggle = "change"
+    document.getElementById(e).style.backgroundColor = "red";
+    for (let i = 0; i < width*width; i++) {
+        if (recordPoint[i] == null) {
+            recordPoint[i] == e;
+        }
+    }
 }
