@@ -1,5 +1,7 @@
 .container {
     display: flex;
+    justify-content: center;
+    width: 100%;
 }
 .grid-user {
     width: 500px;
@@ -40,4 +42,3 @@
     background-color: ;
     margin-right: auto;
 }
-
