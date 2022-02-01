@@ -23,16 +23,7 @@ function createBoard(grid, squares, color) {
 }
 createBoard(userGrid, userSquares, "aqua")
 createBoard(userSopra, userSquares, "lightgrey")
-
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJ';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(charactersLength);
-   }
-   return result;
-}
+var characters = 'ABCDEFGHIJ';
 
 const LetterRow = document.querySelector('.lettere')
 const NumberColumn = document.querySelector('.numeri')
@@ -40,11 +31,27 @@ function createLetterRow(grid) {
     for (let i = 0; i < 10; i++) {
         const square = document.createElement('div')
         square.setAttribute("class", "classi")
+        const lololo = document.createElement('p')
+        lololo.innerHTML = characters[i]
+        lololo.style.textAlign = "center"
+        square.appendChild(lololo)
         grid.appendChild(square)
-        square.innerHTML = makeid(i)
     }
 }
 
+var chaer= [1,2,3,4,5,6,7,8,9,10];
+function createNumberColumn(grid) {
+    for (let i = 0; i < 10; i++) {
+        const square = document.createElement('div')
+        square.setAttribute("class", "classi")
+        const lololo = document.createElement('p')
+        lololo.innerHTML = chaer[i]
+        lololo.style.textAlign = "center"
+        square.appendChild(lololo)
+        grid.appendChild(square)
+    }
+}
+createNumberColumn(NumberColumn)
 createLetterRow(LetterRow)
 
 const barche = [
@@ -66,7 +73,7 @@ function it(e) {
     if (!pippo) {
         const shipColor = barche[shipIndex].firstChild.style.backgroundColor;
         let element = document.getElementById(e)
-
+        
         if (element.getAttribute("data-placed"))
         {
             alert("non va bene")
@@ -77,7 +84,8 @@ function it(e) {
             x: parseInt(element.getAttribute("data-x")),
             y: parseInt(element.getAttribute("data-y"))
         }
-
+        console.log(JSON.stringify(coordinates))
+        console.log(JSON.stringify(firstBox))
         if (firstBox == null) {
             firstBox = coordinates
         } else if(lastBox == null) {
@@ -91,7 +99,8 @@ function it(e) {
                     firstBox = lastBox
                     lastBox = t
                 }
-                axis = (firstBox.x == coordinates.x ? "y" : "x")
+                axis = (firstBox.x == coordinates.x && firstBox.y != coordinates.y ? "y" : "x")
+                console.log(axis)
                 oppositeAxis = (axis == "x" ? "y" : "x")
             } else {
                 alert("non va bene")
