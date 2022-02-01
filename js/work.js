@@ -1,12 +1,13 @@
 const userGrid = document.querySelector('.grid-user')
+const userSopra = document.querySelector('.grid-sopra')
 const width = 10
 const userSquares = []
 
-function createBoard(grid, squares) {
+function createBoard(grid, squares, color) {
     let x = 0, y = 0
     for (let i = 0; i < width*width; i++) {
         const square = document.createElement('div')
-        square.style.backgroundColor = "aqua"
+        square.style.backgroundColor = color
         square.setAttribute("id", i)
         square.setAttribute("onclick","it(" + i + ")")
         square.setAttribute("class", "classi")
@@ -20,8 +21,31 @@ function createBoard(grid, squares) {
         }
     }
 }
-createBoard(userGrid, userSquares);
+createBoard(userGrid, userSquares, "aqua")
+createBoard(userSopra, userSquares, "lightgrey")
 
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJ';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(charactersLength);
+   }
+   return result;
+}
+
+const LetterRow = document.querySelector('.lettere')
+const NumberColumn = document.querySelector('.numeri')
+function createLetterRow(grid) {
+    for (let i = 0; i < 10; i++) {
+        const square = document.createElement('div')
+        square.setAttribute("class", "classi")
+        grid.appendChild(square)
+        square.innerHTML = makeid(i)
+    }
+}
+
+createLetterRow(LetterRow)
 
 const barche = [
     document.getElementById("barca-1"),
@@ -34,6 +58,7 @@ const barche = [
 var firstBox = null
 var lastBox = null
 var axis
+var oppositeAxis
 let counterBox = 1
 var shipIndex = 0
 
@@ -48,41 +73,46 @@ function it(e) {
             return
         }
 
-        element.setAttribute("data-placed", true)
         let coordinates = {
             x: parseInt(element.getAttribute("data-x")),
             y: parseInt(element.getAttribute("data-y"))
         }
+
         if (firstBox == null) {
-            element.style.backgroundColor = shipColor;
             firstBox = coordinates
         } else if(lastBox == null) {
             if (
                 Math.abs(firstBox.x - coordinates.x) == 1 && firstBox.y == coordinates.y  ||
                 Math.abs(firstBox.y - coordinates.y) == 1 && firstBox.x == coordinates.x 
             ) {
-                element.style.backgroundColor = shipColor;
                 lastBox = coordinates
                 if (firstBox.x > coordinates.x || firstBox.y > coordinates.y) {
                     let t = firstBox
                     firstBox = lastBox
                     lastBox = t
                 }
-                axis = firstBox.x == coordinates.x ? "y" : "x"
+                axis = (firstBox.x == coordinates.x ? "y" : "x")
+                oppositeAxis = (axis == "x" ? "y" : "x")
             } else {
                 alert("non va bene")
                 return;
             } 
-        } else if (firstBox[axis] - coordinates[axis] == 1) {
-            element.style.backgroundColor = shipColor;
-            firstBox = coordinates
-        } else if (coordinates[axis] - lastBox[axis] == 1) {
-            element.style.backgroundColor = shipColor;
-            lastBox = coordinates
+        } else if (firstBox[oppositeAxis] == coordinates[oppositeAxis]) {
+            if (firstBox[axis] - coordinates[axis] == 1) {
+                firstBox = coordinates
+            } else if (coordinates[axis] - lastBox[axis] == 1) {
+                lastBox = coordinates
+            } else {
+                alert("non va bene")
+                return
+            }
         } else {
             alert("non va bene")
             return
         }
+
+        element.style.backgroundColor = shipColor;
+        element.setAttribute("data-placed", true)
 
         if (counterBox++ % barche[shipIndex].childElementCount == 0) {
             firstBox = lastBox = null
@@ -93,7 +123,7 @@ function it(e) {
 
         if (shipIndex == barche.length)
         {
-            pippo = true;
+            pippo = true
         }
     }
 }

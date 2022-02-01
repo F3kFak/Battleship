@@ -1,6 +1,4 @@
 .container {
-    display: flex;
-    justify-content: center;
     width: 100%;
 }
 .grid-user {
@@ -11,6 +9,30 @@
     margin: 10px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.grid-sopra {
+    width: 500px;
+    height: 500px;
+    display:flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lettere-grid {
+    width: 500px;
+    height: 50px;
+    flex-wrap: wrap;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid-le div{
+    width: 50px;
+    height: 50px;
 }
 
 .grid div {
